@@ -16,8 +16,7 @@ before_deploy:
 
 deploy:
 - provider: npm
-  api_key:
-    secure: "hZf5PjnmkGXeqE2rEdSzklqH6nZ0mNq/T0wEBB8JERF7M7QC7riBtmJ1EuRZiOyglakEoVG4JJOEFhVuNYqHBIlMBQrc29vTebVXaEfAkkLeLyONK6TonkFwwCNHEkBYAoIZaB7IiPEgR9r0ZEYncYt9U/XcVr5GRVGecfZwjfYCOhk+Et40JzzIsl2VlGUjAGD0WtaDgu1Dt70lnuMMPdlFZpYAqdfYGPa9lc6FXa+5bs+HTa7fTKs8wWhNsGC5RkslhEwyAQ7Cugx5BOcd8f0QYRd+iSztEyGSaQf/JVDGZYBP46FEIwINUjlKbXmXfbNhsQlhyu4aUuml/5T3y9poIFZdRdXZZz6B/ijRCY5G0NDwOPJGaI6w0MSjGtHt1h2Xj3nXssTMMZmmr8XU/OHZy0sEFZSk7Ny+VcwrE+UQozZK3r3YdI3M2De37+/oNTxTFybC2zuGAKbe7sC3NdcbQHv4gxO8JxUZcnd8+QvKoCCM3dSeUiU21DkrkK8d2hleK7ZusvO5WxqFwZUqhNlBbvk6fs/ITVNng/eHsFt7GQ8iOQNAhDloS40UjSk+ZftE/rBYEjN/oUPt+kU1RbMeT+ewhlR4WKjLAnDIBIRY9KrCUPYvQpQOt9L4xyOuqAxi2FV/rJswsbn9pbTT+Zw84CX9uDjCzo3b4O4hIxI="
+  api_key: $NPM_TOKEN
   email: compulim@hotmail.com
   on:
     branch: master
@@ -25,16 +24,14 @@ deploy:
   tag: master
 
 - provider: npm
-  api_key:
-    secure: "hZf5PjnmkGXeqE2rEdSzklqH6nZ0mNq/T0wEBB8JERF7M7QC7riBtmJ1EuRZiOyglakEoVG4JJOEFhVuNYqHBIlMBQrc29vTebVXaEfAkkLeLyONK6TonkFwwCNHEkBYAoIZaB7IiPEgR9r0ZEYncYt9U/XcVr5GRVGecfZwjfYCOhk+Et40JzzIsl2VlGUjAGD0WtaDgu1Dt70lnuMMPdlFZpYAqdfYGPa9lc6FXa+5bs+HTa7fTKs8wWhNsGC5RkslhEwyAQ7Cugx5BOcd8f0QYRd+iSztEyGSaQf/JVDGZYBP46FEIwINUjlKbXmXfbNhsQlhyu4aUuml/5T3y9poIFZdRdXZZz6B/ijRCY5G0NDwOPJGaI6w0MSjGtHt1h2Xj3nXssTMMZmmr8XU/OHZy0sEFZSk7Ny+VcwrE+UQozZK3r3YdI3M2De37+/oNTxTFybC2zuGAKbe7sC3NdcbQHv4gxO8JxUZcnd8+QvKoCCM3dSeUiU21DkrkK8d2hleK7ZusvO5WxqFwZUqhNlBbvk6fs/ITVNng/eHsFt7GQ8iOQNAhDloS40UjSk+ZftE/rBYEjN/oUPt+kU1RbMeT+ewhlR4WKjLAnDIBIRY9KrCUPYvQpQOt9L4xyOuqAxi2FV/rJswsbn9pbTT+Zw84CX9uDjCzo3b4O4hIxI="
+  api_key: $NPM_TOKEN
   email: compulim@hotmail.com
   on:
     tags: true
   skip_cleanup: true
 
 - provider: releases
-  api_key:
-    secure: "J/veLPToDqukZieURx13YKhOkj75tgKt4Shph4EEsNVUQo8Ckd+PioUjrQNQyK3dlTgHxJLX+yYYTiQKgGLCEQwntt/2aZMWTUjKtZMnfVwRjG1suRG7HWX+4tBvT41e9CH4y/H0OlM2G5CHTgcoMYCf2z3seDNXaBsjpN2cH/4tmjmWIfba3RWkesGgeNdOBHaNZvJwP58kpBZXywvW1k8jNkjJjL0gl/IDsPUkUrPeRBhSSlGsm3SxNdJkPy3y42RgtS+i7AqyVXSiUpswNYohYzs5exnua4P1KQzd4J0W2hZEgUjY9YJRJjimdwrum8VyuDY3odiZqAudlTswPwGrn0vdhxLT4dgRdOMr7UonCzWEfINxVu4N2gNawdaQDaYyEmMQ28l5bPt+p3UUsjYNIpenHn0bSwiDjT1jzogv9Dxg5zGxvp+O5fBaiIbSJya18DRr9AiK9x3cVQ9qGmbRikPRJuX0wS4a8TlvF0Z+5+g/l937sOe2C6NueHdZDcN9mo+/w7ufqtbTcTsmVbZGPfcWaeIJYCM2Gve03uuBixUe/nU5V5Wt00cgagtBiAZ1t+m/aC7g7BZ6RSwWi+3F8JlWJ3Q34Gyc5QYkU8yc/AZ11EPPO43EYrRLHpyH6ICUZ/d65gutBnOHYcxNlbLguoCj4U2MAPkW/d4btP4="
+  api_key: $GITHUB_TOKEN
   on:
     tags: true
   skip_cleanup: true
