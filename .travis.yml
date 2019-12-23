@@ -17,6 +17,7 @@ before_deploy:
 deploy:
 - provider: npm
   api_key: $NPM_TOKEN
+  edge: true
   email: compulim@hotmail.com
   on:
     branch: master
@@ -25,6 +26,7 @@ deploy:
 
 - provider: npm
   api_key: $NPM_TOKEN
+  edge: true
   email: compulim@hotmail.com
   on:
     tags: true
@@ -32,6 +34,7 @@ deploy:
 
 - provider: releases
   api_key: $GITHUB_TOKEN
+  edge: true
   on:
     tags: true
   skip_cleanup: true
