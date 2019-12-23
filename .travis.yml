@@ -1,0 +1,37 @@
+language: node_js
+
+node_js:
+- "12"
+
+install:
+- npm ci
+
+script:
+- npm test
+
+before_deploy:
+- git config --local user.name "William Wong"
+- git config --local user.email "compulim@hotmail.com"
+- npx verison-from-git --travis
+
+deploy:
+- provider: npm
+  api_key: $NPM_TOKEN
+  email: compulim@hotmail.com
+  on:
+    branch: master
+  skip_cleanup: true
+  tag: master
+
+- provider: npm
+  api_key: $NPM_TOKEN
+  email: compulim@hotmail.com
+  on:
+    tags: true
+  skip_cleanup: true
+
+- provider: releases
+  api_key: $GITHUB_TOKEN
+  on:
+    tags: true
+  skip_cleanup: true

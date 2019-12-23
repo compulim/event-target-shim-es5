@@ -1,0 +1,47 @@
+{
+  "name": "event-target-shim-es5",
+  "version": "0.0.0-0",
+  "description": "",
+  "browser": "dist/event-target-shim-es5.production.min.js",
+  "files": [
+    "src/**/*",
+    "webpack-lib.config.js"
+  ],
+  "main": "lib/index.js",
+  "scripts": {
+    "postinstall": "webpack --config webpack-lib.config.js",
+    "prepublishOnly": "webpack --config webpack-dist.config.js",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/compulim/event-target-shim-es5.git"
+  },
+  "keywords": [
+    "event",
+    "event",
+    "target",
+    "event-target-shim"
+  ],
+  "author": "William Wong <compulim@hotmail.com> (http://compulim.info/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/compulim/event-target-shim-es5/issues"
+  },
+  "homepage": "https://github.com/compulim/event-target-shim-es5#readme",
+  "dependencies": {
+    "@babel/core": "^7",
+    "@babel/preset-env": "^7",
+    "babel-loader": "^8",
+    "webpack": "^4",
+    "webpack-cli": "^3"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.7.7",
+    "event-target-shim": "^5.0.1",
+    "jest": "^24.9.0"
+  },
+  "peerDependencies": {
+    "event-target-shim": "*"
+  }
+}
