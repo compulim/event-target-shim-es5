@@ -1,7 +1,12 @@
 {
   "presets": [
-    ["@babel/preset-env", {
-      "forceAllTransforms": true
-    }]
+    [
+      "@babel/preset-env",
+      {
+        "targets": {
+          "node": "12"
+        }
+      }
+    ]
   ]
 }
