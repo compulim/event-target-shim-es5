@@ -42,15 +42,17 @@ When you update `event-target-shim`, re-run `npm install event-target-shim-es5` 
 
 ## Alternatives
 
+Instead of using this package, there are alternative workarounds you can use.
+
 ### Including the source code
 
-Instead of relying on this package, you can also copy the source code of `event-target-shim` into your web app and use your build pipeline transpile the original package.
+You can copy the source code of `event-target-shim` into your web app and use your build pipeline transpile the original package.
 
 When copying, be sure to include the original license and continue to depends on the package to make sure `npm audit` will scan for vulnerabilities.
 
 ### Modify your bundler configuration
 
-Webpack do not transpile code under `/node_modules/` unless specified explicitly. Modify `webpack.config.js` to include `/node_modules/event-target-shim` and use `babel-loader` to transpile it on-the-fly.
+Webpack do not transpile code under `/node_modules/` unless specified explicitly. You can modify `webpack.config.js` to include `/node_modules/event-target-shim` and use `babel-loader` to transpile it on-the-fly.
 
 ## Contributions
 
