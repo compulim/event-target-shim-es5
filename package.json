@@ -18,8 +18,8 @@
   },
   "keywords": [
     "event",
-    "event",
-    "target",
+    "event target",
+    "eventtarget",
     "event-target-shim"
   ],
   "author": "William Wong <compulim@hotmail.com> (http://compulim.info/)",
