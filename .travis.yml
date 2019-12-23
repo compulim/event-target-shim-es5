@@ -12,7 +12,7 @@ script:
 before_deploy:
 - git config --local user.name "William Wong"
 - git config --local user.email "compulim@hotmail.com"
-- npx verison-from-git --travis
+- npx version-from-git --travis
 
 deploy:
 - provider: npm
