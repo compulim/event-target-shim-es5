@@ -16,6 +16,20 @@ To install in your project, run:
 npm install event-target-shim event-target-shim-es5
 ```
 
+In your code:
+
+```js
+import EventTarget, { defineEventAttribute } from 'event-target-shim-es5';
+
+class YourComponent extends EventTarget {
+  handleClick() {
+    this.dispatchEvent(new Event('click'));
+  }
+}
+
+defineEventAttribute(YourComponent.prototype, 'click');
+```
+
 ## How it works
 
 On `postinstall`, this package will run Babel and Webpack to transpile `event-target-shim` into a single file.
