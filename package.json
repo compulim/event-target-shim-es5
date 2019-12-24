@@ -9,7 +9,6 @@
   "main": "lib/index.js",
   "scripts": {
     "postinstall": "webpack --config webpack-lib.config.js",
-    "prepublishOnly": "webpack --config webpack-dist.config.js",
     "test": "jest"
   },
   "repository": {

@@ -2,11 +2,11 @@
 
 [![npm version](https://img.shields.io/npm/v/event-target-shim-es5.svg)](https://www.npmjs.com/package/event-target-shim-es5) [![Build Status](https://travis-ci.org/compulim/event-target-shim-es5.svg?branch=master)](https://travis-ci.org/compulim/event-target-shim-es5)
 
-This package is based on [`event-target-shim`](https://npmjs.com/package/event-target-shim). The original package is not transpiled for ES5 browsers. Including it directly or indirectly will break web apps running on ES5 browsers.
+This package is based on [`event-target-shim`](https://npmjs.com/package/event-target-shim). Although the original package contains an [ES5 bundle](https://unpkg.com/event-target-shim/dist/event-target-shim.umd.js), it did not contains an ES5 module. Importing the module directly or indirectly may break web apps running on ES5 browsers.
 
 On install, this package will transpile your version of `event-target-shim` to make it compatible with ES5 browsers.
 
-Package authors should consider using this package instead of `event-target-shim` , so your packages will not break your users due to having `event-target-shim` as a transient dependency.
+Package authors should consider importing this package instead of `event-target-shim`, so your packages will not break your users due to having `event-target-shim` as a transient dependency.
 
 ## How to use
 
@@ -42,7 +42,7 @@ When you update `event-target-shim`, re-run `npm install event-target-shim-es5` 
 
 ## Alternatives
 
-Instead of using this package, there are alternative workarounds you can use.
+Instead of importing this package, there are alternative workarounds you can use.
 
 ### Including the source code
 
@@ -52,7 +52,7 @@ When copying, be sure to include the original license and continue to depends on
 
 ### Modify your bundler configuration
 
-Webpack do not transpile code under `/node_modules/` unless specified explicitly. You can modify `webpack.config.js` to include `/node_modules/event-target-shim` and use `babel-loader` to transpile it on-the-fly.
+Webpack do not transpile code under `/node_modules/` unless specified explicitly. You can modify `webpack.config.js` to include `/node_modules/event-target-shim/` and use `babel-loader` to transpile it on-the-fly.
 
 ## Contributions
 

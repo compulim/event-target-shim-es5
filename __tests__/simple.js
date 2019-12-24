@@ -1,9 +1,7 @@
 import EventTarget, { defineEventAttribute } from '../lib/index';
 
 test('EventTarget should be a class', () => {
-  class Car extends EventTarget {}
-
-  expect(new Car()).toBeTruthy();
+  expect(new EventTarget()).toBeTruthy();
 });
 
 test('defineEventAttribute should be a function', () => {
