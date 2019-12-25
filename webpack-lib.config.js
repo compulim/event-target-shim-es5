@@ -9,7 +9,6 @@ module.exports = {
   module: {
     rules: [
       {
-        include: [join(__dirname, 'node_modules/event-target-shim/')],
         test: /\.m?js$/iu,
         use: {
           loader: 'babel-loader',
