@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.1] - 2019-12-24
+
+- Accepts `abort-controller` package from parent `node_modules` folders
+
 ## [1.0.0] - 2019-12-23
 
 ### Added
