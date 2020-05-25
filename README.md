@@ -1,6 +1,6 @@
 # event-target-shim-es5
 
-[![npm version](https://img.shields.io/npm/v/event-target-shim-es5.svg)](https://www.npmjs.com/package/event-target-shim-es5) [![Build Status](https://travis-ci.org/compulim/event-target-shim-es5.svg?branch=master)](https://travis-ci.org/compulim/event-target-shim-es5)
+[![npm version](https://img.shields.io/npm/v/event-target-shim-es5.svg)](https://www.npmjs.com/package/event-target-shim-es5) ![Node.js CI](https://github.com/compulim/event-target-shim-es5/workflows/Node.js%20CI/badge.svg)
 
 This package is based on [`event-target-shim`](https://npmjs.com/package/event-target-shim). Although the original package contains an [ES5 bundle](https://unpkg.com/event-target-shim/dist/event-target-shim.umd.js), it did not contains an ES5 module. Importing the module directly or indirectly may break web apps running on ES5 browsers.
 
