@@ -58,5 +58,5 @@ jobs:
       - run: 'tar xvf *.tgz'
 
       - run: |
-        cd package
-        ls -la
+          cd package
+          ls -la
