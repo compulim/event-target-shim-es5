@@ -28,13 +28,15 @@ jobs:
 
       - run: echo ${{ github.ref }}
 
-      - run: npx version-from-git
+      - run: npx version-from-git --no-git-tag-version
 
-      - run: npm ci --ignore-scripts
+      - run: npm ci
 
       - run: npm run build --if-present
 
       - run: npm test
+
+      - run: rm -r lib
 
       - run: npm pack
 
