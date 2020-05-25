@@ -26,6 +26,9 @@ module.exports = {
       }
     ]
   },
+  optimization: {
+    minimize: false
+  },
   output: {
     libraryTarget: 'commonjs2',
     path: join(__dirname, 'lib')
