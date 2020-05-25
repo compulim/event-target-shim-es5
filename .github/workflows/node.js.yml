@@ -23,14 +23,13 @@ jobs:
         node-version: [12.x, 14.x]
 
     steps:
-      - uses: actions/checkout@v2
+      - name: Checking out for ${{ github.ref }}
+        uses: actions/checkout@v2
 
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-
-      - run: echo ${{ github.ref }}
 
       - run: npx version-from-git --no-git-tag-version
         if: ${{ startsWith(github.ref, 'refs/heads/') }}
@@ -41,7 +40,7 @@ jobs:
 
       - run: npm test
 
-      # This package requires /lib to be removed
+      # This package requires /lib to be removed before packaging
       - run: rm -r lib
 
       - run: npm pack
@@ -65,8 +64,8 @@ jobs:
       - name: Read package.json
         id: read-package-json
         run: |
-          echo "::set-output name=name::$(tar xOf *.tgz package.json | jq -r '.name')"
-          echo "::set-output name=version::$(tar xOf *.tgz package.json | jq -r '.version')"
+          echo "::set-output name=name::$(tar xOf *.tgz package/package.json | jq -r '.name')"
+          echo "::set-output name=version::$(tar xOf *.tgz package/package.json | jq -r '.version')"
 
       - name: Run npm publish ${{ steps.read-package-json.outputs.name }}@${{ steps.read-package-json.outputs.version }}
         run: |
