@@ -29,6 +29,7 @@ jobs:
       - run: echo ${{ github.ref }}
 
       - run: npx version-from-git --no-git-tag-version
+        if: ${{ contains(github.ref, 'refs/heads/') }}
 
       - run: npm ci
 
@@ -46,16 +47,13 @@ jobs:
           path: '*.tgz'
 
   publish:
+    needs: build
     runs-on: ubuntu-latest
 
-    if: ${{ contains(github.ref, 'refs/heads/') }}
-
     steps:
-      - run: echo Will publish
-
       - uses: actions/download-artifact@v2
         with:
-          name: npm-tarbacll
+          name: npm-tarball
 
       - run: 'tar xvf *.tgz'
 
