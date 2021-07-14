@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Moved to [`esbuild`](https://npmjs.com/package/esbuild) from Webpack, in PR [#22](https://github.com/compulim/event-target-shim-es5/pull/22)
+
 ## [1.2.2] - 2021-07-13
 
 ### Changed
