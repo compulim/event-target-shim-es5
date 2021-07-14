@@ -1,4 +1,23 @@
-import EventTarget, { defineEventAttribute } from 'event-target-shim';
+import {
+  defineCustomEventTarget,
+  defineEventAttribute,
+  Event,
+  EventTarget,
+  getEventAttributeValue,
+  setErrorHandler,
+  setEventAttributeValue,
+  setWarningHandler
+} from 'event-target-shim';
 
 export default EventTarget;
-export { defineEventAttribute, EventTarget };
+
+export {
+  defineCustomEventTarget,
+  defineEventAttribute,
+  Event,
+  EventTarget,
+  getEventAttributeValue,
+  setErrorHandler,
+  setEventAttributeValue,
+  setWarningHandler
+};
