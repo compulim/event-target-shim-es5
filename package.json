@@ -10,8 +10,8 @@
   "main": "lib/index.js",
   "module": "lib/esm/index.mjs",
   "scripts": {
-    "build:cjs": "esbuild ./src/index.js --bundle --format=cjs | babel --config-file ./babel.config.cjs.json --filename index.js --out-file lib/index.js",
-    "build:esm": "esbuild ./src/index.js --bundle --format=esm | babel --config-file ./babel.config.esm.json --filename index.mjs --out-file lib/esm/index.mjs",
+    "build:cjs": "esbuild ./src/index.js --bundle --format=cjs --outfile=./lib/bundle.js && babel --config-file ./babel.config.cjs.json --out-file lib/index.js ./lib/bundle.js",
+    "build:esm": "esbuild ./src/index.js --bundle --format=esm --outfile=./lib/esm/bundle.mjs && babel --config-file ./babel.config.esm.json --out-file lib/esm/index.mjs ./lib/esm/bundle.mjs",
     "postinstall": "npm run build:cjs && npm run build:esm",
     "test": "jest"
   },
