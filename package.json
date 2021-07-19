@@ -2,18 +2,33 @@
   "name": "event-target-shim-es5",
   "version": "2.0.0-0",
   "description": "",
+  "engines": {
+    "node": ">= 12.2.0"
+  },
   "files": [
-    "babel.config.cjs.json",
+    "babel.config.commonjs.json",
     "babel.config.esm.json",
+    "dist/**/*",
+    "scripts/**/*",
     "src/**/*"
   ],
   "main": "lib/index.js",
   "module": "lib/esm/index.mjs",
+  "exports": {
+    ".": {
+      "import": "./lib/esm/index.mjs",
+      "require": "./lib/index.js"
+    },
+    "./dist/event-target-shim-es5.production.min.js": {
+      "default": "./dist/event-target-shim-es5.production.min.js"
+    }
+  },
   "scripts": {
-    "build:cjs": "esbuild ./src/index.js --bundle --format=cjs --outfile=./lib/bundle.js && babel --config-file ./babel.config.cjs.json --out-file lib/index.js ./lib/bundle.js",
-    "build:esm": "esbuild ./src/index.js --bundle --format=esm --outfile=./lib/esm/bundle.mjs && babel --config-file ./babel.config.esm.json --out-file lib/esm/index.mjs ./lib/esm/bundle.mjs",
-    "postinstall": "npm run build:cjs && npm run build:esm",
-    "test": "jest"
+    "postinstall:commonjs": "node ./scripts/esbuild.mjs event-target-shim ./src/index.js cjs ./lib/index.bundled.js && babel ./lib/index.bundled.js --config-file ./babel.config.commonjs.json --out-file ./lib/index.js",
+    "postinstall:esm": "node ./scripts/esbuild.mjs event-target-shim ./src/index.mjs esm lib/esm/index.bundled.mjs && babel ./lib/esm/index.bundled.mjs --config-file ./babel.config.esm.json --out-file ./lib/esm/index.mjs",
+    "postinstall": "npm run postinstall:commonjs && npm run postinstall:esm",
+    "prepublishOnly:global": "mkdirp ./dist && esbuild ./src/global.mjs --bundle --format=iife --minify --outfile=./lib/esm/global.bundled.mjs && babel ./lib/esm/global.bundled.mjs --config-file ./babel.config.global.json | terser --compress --mangle --output ./dist/event-target-shim-es5.production.min.js",
+    "prepublishOnly": "npm run prepublishOnly:global"
   },
   "repository": {
     "type": "git",
@@ -32,15 +47,18 @@
   },
   "homepage": "https://github.com/compulim/event-target-shim-es5#readme",
   "dependencies": {
-    "@babel/cli": "7.14.5",
-    "@babel/core": "7.14.6",
-    "@babel/preset-env": "7.14.7",
-    "esbuild": "0.12.15",
-    "terser": "5.7.1"
+    "@babel/cli": "^7.14.5",
+    "@babel/core": "^7.14.6",
+    "@babel/plugin-transform-runtime": "^7.14.5",
+    "@babel/preset-env": "^7.14.7",
+    "@babel/runtime-corejs3": "^7.14.7",
+    "esbuild": "^0.12.15",
+    "mkdirp": "^1.0.4",
+    "read-pkg-up": "^8.0.0",
+    "terser": "^5.7.1"
   },
   "devDependencies": {
-    "event-target-shim": "^6.0.2",
-    "jest": "^27.0.6"
+    "event-target-shim": "^6.0.2"
   },
   "peerDependencies": {
     "event-target-shim": ">= 6"

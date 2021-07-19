@@ -1,23 +1,21 @@
-import {
+import EventTarget, {
   defineCustomEventTarget,
   defineEventAttribute,
   Event,
-  EventTarget,
   getEventAttributeValue,
   setErrorHandler,
   setEventAttributeValue,
   setWarningHandler
 } from 'event-target-shim';
 
-export default EventTarget;
+// module.exports = EventTarget;
 
-export {
-  defineCustomEventTarget,
-  defineEventAttribute,
-  Event,
-  EventTarget,
-  getEventAttributeValue,
-  setErrorHandler,
-  setEventAttributeValue,
-  setWarningHandler
-};
+module.exports.default = EventTarget;
+module.exports.defineCustomEventTarget = defineCustomEventTarget;
+module.exports.defineEventAttribute = defineEventAttribute;
+module.exports.Event = Event;
+module.exports.EventTarget = EventTarget;
+module.exports.getEventAttributeValue = getEventAttributeValue;
+module.exports.setErrorHandler = setErrorHandler;
+module.exports.setEventAttributeValue = setEventAttributeValue;
+module.exports.setWarningHandler = setWarningHandler;

@@ -1,0 +1,98 @@
+# This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+
+name: Manually triggered test
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version'
+        required: true
+        default: 'master'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [12.x, 14.x, 16.x]
+
+    steps:
+      - name: Checking out for ${{ github.ref }}
+        uses: actions/checkout@v2
+
+      - uses: actions/upload-artifact@v2
+        if: ${{ matrix.node-version == '16.x' }}
+        with:
+          name: e2e-tests
+          path: '__e2e__/**/*'
+
+  test-linux:
+    needs: build
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [12.x, 14.x, 16.x]
+
+    steps:
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      # NPM@7 is buggy right now, we will use NPM@6 until Node.js 16.x go LTS.
+      - name: Use NPM@6 on Node.js 16.x
+        if: ${{ matrix.node-version == '16.x' }}
+        run: npm i -g npm@6 --registry=https://registry.npmjs.org
+
+      - name: Install dependencies
+        run: |
+          echo { \"dependencies\": { \"esbuild\": \"*\", \"jest\": \"*\", \"event-target-shim\": \"*\", \"event-target-shim-es5\": \"${{ github.event.inputs.version }}\", \"webpack\": \"*\", \"webpack-cli\": \"*\" } } > package.json
+          npm install
+
+      - uses: actions/download-artifact@v2
+        with:
+          name: e2e-tests
+
+      - name: Build tests
+        run: npm run postinstall
+
+      - name: Run tests
+        run: npm test
+
+  test-windows:
+    needs: build
+    runs-on: windows-latest
+
+    strategy:
+      matrix:
+        node-version: [12.x, 14.x, 16.x]
+
+    steps:
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      # NPM@7 is buggy right now, we will use NPM@6 until Node.js 16.x go LTS.
+      - name: Use NPM@6 on Node.js 16.x
+        if: ${{ matrix.node-version == '16.x' }}
+        run: npm i -g npm@6 --registry=https://registry.npmjs.org
+
+      - name: Install dependencies
+        run: |
+          echo '{ "dependencies": { "esbuild": "*", "jest": "*", "event-target-shim": "*", "event-target-shim-es5": "${{ github.event.inputs.version }}", "webpack": "*", "webpack-cli": "*" } }' > package.json
+          npm install
+
+      - uses: actions/download-artifact@v2
+        with:
+          name: e2e-tests
+
+      - name: Build tests
+        run: npm run postinstall
+
+      - name: Run tests
+        run: npm test
