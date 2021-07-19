@@ -6,9 +6,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Added ES Module entrypoint, in PR [#24](https://github.com/compulim/event-target-shim-es5/pull/24)
+
 ### Changed
 
 - Moved to [`esbuild`](https://npmjs.com/package/esbuild) from Webpack, in PR [#22](https://github.com/compulim/event-target-shim-es5/pull/22) and [#23](https://github.com/compulim/event-target-shim-es5/pull/23)
+- Move to end-to-end tests from unit tests, in PR [#24](https://github.com/compulim/event-target-shim-es5/pull/24)
+- Ponyfill `globalThis` and `Promise` via `core-js-pure` by usage, in PR [#24](https://github.com/compulim/event-target-shim-es5/pull/24)
 
 ## [1.2.2] - 2021-07-13
 
