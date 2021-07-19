@@ -6,12 +6,14 @@ name: Node.js CI
 on:
   push:
     branches:
+      - main
       - master
     tags:
       - '*'
 
   pull_request:
     branches:
+      - main
       - master
 
 jobs:
@@ -36,14 +38,30 @@ jobs:
 
       - run: npm ci
 
-      - run: npm run build --if-present
-
-      - run: npm test
+      - run: npm run prepublishOnly --if-present
 
       # This package requires /lib to be removed before packaging
       - run: rm -r lib
 
       - run: npm pack
+
+      - name: Pack github-pages
+        if: ${{ matrix.node-version == '16.x' }}
+        run: |
+          cp dist/* public
+          cd public
+
+      - uses: actions/upload-artifact@v2
+        if: ${{ matrix.node-version == '16.x' }}
+        with:
+          name: e2e-tests
+          path: '__e2e__/**/*'
+
+      - uses: actions/upload-artifact@v2
+        if: ${{ matrix.node-version == '16.x' }}
+        with:
+          name: gh-pages
+          path: 'public/**/*'
 
       - uses: actions/upload-artifact@v2
         if: ${{ matrix.node-version == '16.x' }}
@@ -51,10 +69,106 @@ jobs:
           name: npm-tarball
           path: '*.tgz'
 
-  publish:
+  test-linux:
     needs: build
     runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [12.x, 14.x, 16.x]
+
+    steps:
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      # NPM@7 is buggy right now, we will use NPM@6 until Node.js 16.x go LTS.
+      - name: Use NPM@6 on Node.js 16.x
+        if: ${{ matrix.node-version == '16.x' }}
+        run: npm i -g npm@6 --registry=https://registry.npmjs.org
+
+      - uses: actions/download-artifact@v2
+        with:
+          name: e2e-tests
+
+      - uses: actions/download-artifact@v2
+        with:
+          name: npm-tarball
+
+      - name: Install dependencies
+        run: |
+          mv *.tgz package.tgz
+          npm install
+
+      - name: Run tests
+        run: npm test
+
+  test-windows:
+    needs: build
+    runs-on: windows-latest
+
+    strategy:
+      matrix:
+        node-version: [12.x, 14.x, 16.x]
+
+    steps:
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      # NPM@7 is buggy right now, we will use NPM@6 until Node.js 16.x go LTS.
+      - name: Use NPM@6 on Node.js 16.x
+        if: ${{ matrix.node-version == '16.x' }}
+        run: npm i -g npm@6 --registry=https://registry.npmjs.org
+
+      - uses: actions/download-artifact@v2
+        with:
+          name: e2e-tests
+
+      - uses: actions/download-artifact@v2
+        with:
+          name: npm-tarball
+
+      - name: Install dependencies
+        run: |
+          ren *.tgz package.tgz
+          npm install
+
+      - name: Run tests
+        run: npm test
+
+  publish-pages:
     if: ${{ startsWith(github.ref, 'refs/heads/') || startsWith(github.ref, 'refs/tags/') }}
+
+    needs:
+      - build
+      - test-linux
+      - test-windows
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/download-artifact@v2
+        with:
+          name: gh-pages
+
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: .
+
+  publish-npm:
+    if: ${{ startsWith(github.ref, 'refs/heads/') || startsWith(github.ref, 'refs/tags/') }}
+
+    needs:
+      - build
+      - test-linux
+      - test-windows
+
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/download-artifact@v2

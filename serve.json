@@ -1,0 +1,12 @@
+{
+  "rewrites": [
+    {
+      "destination": "dist/event-target-shim-es5.production.min.js",
+      "source": "/event-target-shim-es5.production.min.js"
+    },
+    {
+      "destination": "public/index.html",
+      "source": "/"
+    }
+  ]
+}

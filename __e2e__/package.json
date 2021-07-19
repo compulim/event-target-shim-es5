@@ -1,0 +1,18 @@
+{
+  "dependencies": {
+    "esbuild": "*",
+    "jest": "*",
+    "event-target-shim": "*",
+    "event-target-shim-es5": "file:package.tgz",
+    "webpack": "*",
+    "webpack-cli": "*"
+  },
+  "scripts": {
+    "postinstall": "npm run postinstall:esbuild:commonjs && npm run postinstall:esbuild:esm && npm run postinstall:webpack:commonjs && npm run postinstall:webpack:esm",
+    "postinstall:esbuild:commonjs": "esbuild ./web.js --bundle --format=cjs --outfile=./dist/main.esbuild-commonjs.js",
+    "postinstall:esbuild:esm": "esbuild ./web.mjs --bundle --format=esm --outfile=./dist/main.esbuild-esm.js",
+    "postinstall:webpack:commonjs": "webpack --config webpack.commonjs.config.js",
+    "postinstall:webpack:esm": "webpack --config webpack.esm.config.js",
+    "test": "jest"
+  }
+}

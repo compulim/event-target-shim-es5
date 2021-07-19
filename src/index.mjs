@@ -8,8 +8,9 @@ import EventTarget, {
   setWarningHandler
 } from 'event-target-shim';
 
-module.exports = {
-  default: EventTarget,
+export default EventTarget;
+
+export {
   defineCustomEventTarget,
   defineEventAttribute,
   Event,

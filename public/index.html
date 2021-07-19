@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <script>
+      'use strict';
+
+      if (~navigator.userAgent.indexOf('Trident')) {
+        window.addEventListener('error', function (event) {
+          alert(event.error.stack || event.error.message);
+        });
+      }
+    </script>
+    <script src="event-target-shim-es5.production.min.js"></script>
+    <style type="text/css">
+      pre {
+        border: solid 1px #ccc;
+        border-radius: 4px;
+        padding: 0.4em;
+      }
+    </style>
+  </head>
+  <body>
+    <p class="polyfill-node" hidden>
+      This browser do not have native implementation of <code>EventTarget</code>. The native entrypoint is polyfilled by the shim.
+    </p>
+    <button class="dispatch-via-native-button">Dispatch via native entrypoint</button>
+    <p>Number of native events fired: <span class="native-counter">0</span></p>
+    <button class="dispatch-via-shim-button">Dispatch via shim</button>
+    <p>Number of shimmed events fired: <span class="shim-counter">0</span></p>
+    <script>
+      'use strict';
+
+      if (!/\{\s+\[native code\]/.test(Function.prototype.toString.call(window.EventTarget))) {
+        document.querySelector('.polyfill-node').removeAttribute('hidden');
+      }
+
+      const nativeComponent = new EventTarget();
+
+      document.querySelector('.dispatch-via-native-button').addEventListener('click', function () {
+        const event = document.createEvent('Event');
+
+        event.initEvent('load', true, true);
+        nativeComponent.dispatchEvent(event);
+      });
+
+      let numNativeDispatched = 0;
+
+      // When using the native implementation, we cannot dispatch event via "onload".
+      nativeComponent.addEventListener('load', function (event) {
+        document.querySelector('.native-counter').textContent = ++numNativeDispatched + ' (' + event.type + ')';
+      });
+
+      const shimmedComponent = new EventTargetShim();
+
+      // When using the shim, we can dispatch event via "onload".
+      Object.defineProperty(shimmedComponent, 'onload', {
+        get: function () {
+          return EventTargetShim.getEventAttributeValue(shimmedComponent, 'load');
+        },
+
+        set: function (value) {
+          EventTargetShim.setEventAttributeValue(shimmedComponent, 'load', value);
+        }
+      });
+
+      document.querySelector('.dispatch-via-shim-button').addEventListener('click', function () {
+        shimmedComponent.dispatchEvent(new EventTargetShim.Event('load'));
+      });
+
+      let numShimDispatched = 0;
+
+      shimmedComponent.onload = function (event) {
+        document.querySelector('.shim-counter').textContent = ++numShimDispatched + ' (' + event.type + ')';
+      };
+    </script>
+  </body>
+</html>
